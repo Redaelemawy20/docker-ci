@@ -43,7 +43,10 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "Ref: ${{ github.ref }}"
           echo "Event: ${{ github.event_name }}"
-
+      - name: Debug GitHub IDs
+        run: |
+          echo "Repository owner ID: ${{ github.repository_owner_id }}"
+          echo "Repository ID: ${{ github.event.repository.id }}"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
