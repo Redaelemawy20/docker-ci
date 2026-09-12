@@ -38,6 +38,12 @@ jobs:
       - name: Push to Docker Hub
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/next-app20:latest
 
+      - name: Debug GitHub context
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Event: ${{ github.event_name }}"
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
