@@ -52,3 +52,12 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::384268138702:role/github-actions-eb-deploy
           aws-region: eu-north-1
+
+      - name: Deploy to Elastic Beanstalk
+        uses: aws-actions/aws-elasticbeanstalk-deploy@v1
+        with:
+          application-name: app
+          environment-name: App-env
+          version-label: docker-deploy
+          region: eu-north-1
+          deployment-package: Dockerrun.aws.json
