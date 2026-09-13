@@ -33,20 +33,28 @@ jobs:
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build Docker Image
-        run: docker build -t ${{secrets.DOCKERHUB_USERNAME}}/next-app20:latest .
+        run: docker build -t ${{secrets.DOCKERHUB_USERNAME}}/next-app20:${{github.sha}} .
 
       - name: Push to Docker Hub
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/next-app20:latest
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/next-app20:${{github.sha}}
 
-      - name: Debug GitHub context
+      - name: Generate Dockerrun.aws.json
         run: |
-          echo "Repository: ${{ github.repository }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Event: ${{ github.event_name }}"
-      - name: Debug GitHub IDs
-        run: |
-          echo "Repository owner ID: ${{ github.repository_owner_id }}"
-          echo "Repository ID: ${{ github.event.repository.id }}"
+          cat > Dockerrun.aws.json <<EOF
+          {
+            "AWSEBDockerrunVersion": "1",
+            "Image": {
+              "Name": "${{ secrets.DOCKERHUB_USERNAME }}/next-app20:${{ github.sha }}",
+              "Update": "true"
+            },
+            "Ports": [
+              {
+                "ContainerPort": "8080"
+              }
+            ]
+          }
+          EOF
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -58,6 +66,6 @@ jobs:
         with:
           application-name: app3
           environment-name: App3-env
-          version-label: docker-deploy-4
+          version-label: ${{github.sha}}
           aws-region: eu-north-1
           deployment-package-path: Dockerrun.aws.json
