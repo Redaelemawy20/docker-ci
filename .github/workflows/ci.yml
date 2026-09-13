@@ -56,8 +56,8 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         uses: aws-actions/aws-elasticbeanstalk-deploy@v1
         with:
-          application-name: app
-          environment-name: App-env
+          application-name: app3
+          environment-name: App3-env
           version-label: docker-deploy-1
           aws-region: eu-north-1
           deployment-package-path: Dockerrun.aws.json
