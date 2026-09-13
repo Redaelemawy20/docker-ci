@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": "1",
   "Image": {
     "Name": "redaelemawy20/next-app20:latest",
-    "Update": "true"
+    "Update": "false"
   },
   "Ports": [
     {
