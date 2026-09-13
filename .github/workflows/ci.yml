@@ -38,26 +38,26 @@ jobs:
       - name: Push to Docker Hub
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/next-app20:latest
 
-      - name: Debug GitHub context
-        run: |
-          echo "Repository: ${{ github.repository }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Event: ${{ github.event_name }}"
-      - name: Debug GitHub IDs
-        run: |
-          echo "Repository owner ID: ${{ github.repository_owner_id }}"
-          echo "Repository ID: ${{ github.event.repository.id }}"
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::384268138702:role/github-actions-eb-deploy
-          aws-region: eu-north-1
+      # - name: Debug GitHub context
+      #   run: |
+      #     echo "Repository: ${{ github.repository }}"
+      #     echo "Ref: ${{ github.ref }}"
+      #     echo "Event: ${{ github.event_name }}"
+      # - name: Debug GitHub IDs
+      #   run: |
+      #     echo "Repository owner ID: ${{ github.repository_owner_id }}"
+      #     echo "Repository ID: ${{ github.event.repository.id }}"
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: arn:aws:iam::384268138702:role/github-actions-eb-deploy
+      #     aws-region: eu-north-1
 
-      - name: Deploy to Elastic Beanstalk
-        uses: aws-actions/aws-elasticbeanstalk-deploy@v1
-        with:
-          application-name: app
-          environment-name: App-env
-          version-label: docker-deploy-2
-          aws-region: eu-north-1
-          deployment-package-path: Dockerrun.aws.json
+      # - name: Deploy to Elastic Beanstalk
+      #   uses: aws-actions/aws-elasticbeanstalk-deploy@v1
+      #   with:
+      #     application-name: app
+      #     environment-name: App-env
+      #     version-label: docker-deploy-2
+      #     aws-region: eu-north-1
+      #     deployment-package-path: Dockerrun.aws.json
